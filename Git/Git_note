@@ -1,0 +1,8 @@
+1、先删除远程 Git 仓库
+$ git remote rm origin
+2、再添加远程 Git 仓库
+$ eval "$(ssh-agent -s)"
+$ ssh-add
+eg:git remote add origin git@192.168.20.154:zhangzexiang/PX4_Log.git
+
+

@@ -1,0 +1,23 @@
+Qt 线程间信号槽传递自定义数据类型(qRegisterMetaType的使用):
+注册方法：在当前类的顶部包含：#include <QMetaType>，构造函数中加入代码：qRegisterMetaType<MyClass>("Myclass")；
+eg: qRegisterMetaType<mavlink_message_t>("mavlink_message_t");
+
+qmlRegisterType 是一个可以将C++实现的类在QML中调用的，连接C++和QML的一个工具，非常重要的函数！！！:
+可以看到qmlRegisterType里总共4个参数，第一个参数* uri指的是QML中import后的内容，相当于头文件名，第二个第三个参数分别是主次版本号，第四个指的是QML中类的名字。 
+第四个QML的类名首字母一定要大写，要不然会报错。。而且是那种你找不到的。
+比如我们常写这个语句 "import QtQuick.Controls 1.1" ，其中的 "QtQuick.Controls" 就是包名 uri ，而 1.1 则是版本，是 versionMajor 和 versionMinor 的组合。 qmlName 则是 QML 中可以使用的类名。
+eg: qmlRegisterType<MySliderItem>("com.mycompany.qmlcomponents", 1, 0, "Slider");
+eg: qmlRegisterType<Field>("FieldSystem", 1, 0, "Field");
+eg: qmlRegisterType<DataSource>("LogInterface", 1, 0, "DataSource");
+在 C++ 中实现一个类，注册到QML环境中，QML环境中使用该类型创建对象
+要注册一个QML 类型，有多种方法可用，如qmlRegisterSingletonType()用来注册一个单例类型， qmlRegisterType()注册一个非单例的类型，qmlRegisterTypeNotAvailable()注册一个类型用来占位，qmlRegisterUncreatableType()通常用来注册一个具有附加属性的附加类型。
+一旦你在C++ 中注册好了 QML 类型，就可以在 QML 文档中引入你注册的包，然后使用注册的类型。要引入包，使用import 语句。引入包后，你就可以在QML 中创建 C++ 导入类型的对象了，与 QML 内建类型的使用完全一样。
+
+
+
+注册不实例化的QML类型
+3. qmlRegisterUncreatableType()
+4. qmlRegisterSingletonType() 这种方法可以注册一个能够在QML中使用的单例类型。
+
+
+

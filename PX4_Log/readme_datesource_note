@@ -1,0 +1,50 @@
+#include <QObject> QObject为所有需要利用元对象系统的对象提供一个基类。
+#include <QAbstractSeries>
+#include <QAbstractAxis> 各轴元素（如轴线，标题，标签，网格线和阴影）的属性和可见性可以单独控制。
+#include <QScatterSeries> 散点图中显示数据
+#include <QXYSeries> 线，样条线和分散线系列的基类。
+#include <QChart> 绘制动态曲线
+#include <QMap>
+	只有继承了QObject类的类，才具有信号槽的能力。所以，为了使用信号槽，必须继承QObject。凡是QObject类（不管是直接子类还是间接子类），都应该在第一行代码写上Q_OBJECT。
+	.cpp中添加一段折线图表。方法：首先加入QChart的命名空间QT_CHARTS_USE_NAMESPACE;
+
+	Q_PROPERTY() 是一个宏，用来在一个类中声明一个属性property，由于该宏是qt特有的，需要用moc进行编译，故必须继承于QObject类。
+1、Q_PROPERTY宏定义格式
+Q_PROPERTY宏定义格式如下：
+
+Q_PROPERTY(type name
+           READ getFunction        //1.必须有一个read函数。
+//它用来读取属性值。因此用Const限定。它的返回值类型必须为属性类型或者属性类型的引用或者指针
+           [WRITE setFunction]     //2.有一个可选的write函数。
+//它用来设置属性值，它的返回值必须为void型，而起必须要含有一个参数。例如:QWidget::setEnabled()
+           [RESET resetFunction]   //3.一个reset函数能够把property设置成其默认状态
+//复位功能必须返回void，并且不带参数   
+ [DESIGNABLE bool] //4.一个"designable"属性表明该property能在GUI builder(一般为Qt Designer)可见      
+           [SCRIPTABLE bool]       //5.编写脚本
+           [STORED bool])          //6.如果定义了"stored"属性表明这是一直存在的。
+//一个NOTIFY信号是可选的 。如果定义，它提供了一个信号这个信号在值发生改变时会自动被触发
+//CONST设定属性是不可修改的 所以不能跟WRITE或者NOTIFY同时出现
+
+	使用Q_INVOKABLE来修饰成员函数，目的在于被修饰的成员函数能够被元对象系统所唤起
+
+ 	QMap<QString,QString> m_map; //定义一个QMap对象 m_map;
+
+#include <QDateTime> 显示当前时间
+QStringList slt = {"abc", "qwe", "upo"};
+foreach(QString s , slt )
+{
+    cout<<s<<endl;
+}
+// 输出结果为：
+abc
+qwe
+upo
+foreach()
+
+
+
+
+
+
+
+

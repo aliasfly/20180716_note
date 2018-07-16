@@ -1,0 +1,77 @@
+    信号的声明是在头文件中进行的，QT的signals关键字指出进入了信号声明区，随后即可声明自己的信号。
+    从形式上讲信号的声明和普通的C++函数是相同的，不过信号却没有函数体定义，另外，信号的返回类型都是void，不要指望能从信号返回什么有用信息。信号由moc自动产生，他们不应该在.cpp文件中实现。 
+学习到自定义信号和槽的时候经常编译不过去，前边一篇解决了Q_OBJECT编译的问题，这里详细说明slots||signals。
+1、signals前面不可加public、private和protected进行修饰；
+     slots前面可以加，因为Qt说槽函数可以当普通函数使用。
+2、signals区域的函数必须是void类型，而且这些信号函数没有函数体，也就是说不可以自己定义这些信号函数，
+          你只要声明它就够了，其它不用管，Qt内部自己弄。
+3、宏定义和函数指针不能用于信号和槽的参数，信号和槽也不能有缺省参数。
+    信号和槽机制是QT的核心机制，要精通QT编程就必须对信号和槽有所了解。信号和槽是一种高级接口，应用于对象之间的通信，他是QT的核心特性，也是QT差别于其他工具包的重要地方。信号和槽是QT自行定义的一种通信机制，他独立于标准的C/C++语言，因此要正确的处理信号和槽，必须借助一个称为moc（Meta Object Compiler）的QT工具，该工具是个C++预处理程式，他为高层次的事件处理自动生成所需要的附加代码。信号和槽能携带任意数量和任意类型的参数，他们是类型完全安全的，不会像回调函数那样产生core dumps。
+    所有从QObject或其子类(例如Qwidget)派生的类都能够包含信号和槽。当对象改动其状态时，信号就由该对象发射(emit)出去，这就是对象所要做的全部事情，他不知道另一端是谁在接收这个信号。槽用于接收信号，但他们是普通的对象成员函数。一个槽并不知道是否有所有信号和自己相连接。而且，对象并不了解具体的通信机制。你能将非常多信号和单个的槽进行连接，也能将单个的信号和非常多的槽进行连接，甚至于将一个信号和另外一个信号相连接也是可能的，这时无论第一个信号什么时候发射系统都将即时发射第二个信号。总之，信号和槽构造了一个强大的部件编程机制。
+ 
+信号
+    当某个信号对其客户或所有者发生的内部状态发生改动，信号被一个对象发射。只有定义过这个信号的类及其派生类能够发射这个信号。当一个信号被发射时，和其相关联的槽将被即时执行，就象一个正常的函数调用相同。信号-槽机制完全独立于所有GUI事件循环。只有当所有的槽返回以后发射函数（emit）才返回。如果存在多个槽和某个信号相关联，那么，当这个信号被发射时，这些槽将会一个接一个地执行，不过他们执行的顺序将会是随机的、不确定的，我们不能人为地指定哪个先执行、哪个后执行。 
+    signals: 
+    void mySignal(); 
+	void mySignal(int x); 
+	void mySignalParam(int x,int y); 
+
+槽
+    槽是普通的C++成员函数，能被正常调用，他们唯一的特别性就是非常多信号能和其相关联。当和其关联的信号被发射时，这个槽就会被调用。槽能有参数，但槽的参数不能有缺省值。 
+    既然槽是普通的成员函数，因此和其他的函数相同，他们也有存取权限。槽的存取权限决定了谁能够和其相关联。同普通的C++成员函数相同，槽函数也分为三种类型，即public slots、private slots和protected slots。 
+    public slots：在这个区内声明的槽意味着所有对象都可将信号和之相连接。这对于组件编程非常有用，你能创建彼此互不了解的对象，将他们的信号和槽进行连接以便信息能够正确的传递。 
+    protected slots：在这个区内声明的槽意味着当前类及其子类能将信号和之相连接。这适用于那些槽，他们是类实现的一部分，不过其界面接口却面向外部。 
+    private slots：在这个区内声明的槽意味着只有类自己能将信号和之相连接。这适用于联系非常紧密的类。 
+    槽也能够声明为虚函数，这也是非常有用的。 
+    槽的声明也是在头文件中进行的。例如，下面声明了三个槽： 
+    public slots: 
+    void mySlot(); 
+    void mySlot(int x); 
+    void mySignalParam(int x,int y);
+信号和槽的关联
+	通过调用QObject对象的connect函数来将某个对象的信号和另外一个对象的槽函数相关联，这样当发射者发射信号时，接收者的槽函数将被调用。该函数的定义如下： 
+bool QObject::connect ( const QObject * sender, const char * signal, const QObject * receiver, const char * member ) [static] 
+	这个函数的作用就是将发射者sender对象中的信号signal和接收者receiver中的member槽函数联系起来。当指定信号signal时必须使用QT的宏SIGNAL()，当指定槽函数时必须使用宏SLOT()。如果发射者和接收者属于同一个对象的话，那么在connect调用中接收者参数能省略。
+eg1:
+QLabel *label = new QLabel; 
+QScrollBar *scroll = new QScrollBar; 
+QObject::connect( scroll, SIGNAL(valueChanged(int)), label, SLOT(setNum(int)) ); 
+	一个信号甚至能够和另一个信号相关联，看下面的例子：
+eg2:
+class MyWidget : public QWidget 
+{ 
+public: 
+MyWidget(); 
+… 
+signals: 
+void aSignal(); 
+… 
+private: 
+… 
+QPushButton *aButton; 
+}; 
+MyWidget::MyWidget() 
+{ 
+aButton = new QPushButton( this ); 
+connect( aButton, SIGNAL(clicked()), SIGNAL(aSignal()) ); 
+} 
+在上面的构造函数中，MyWidget创建了一个私有的按钮aButton，按钮的单击事件产生的信号clicked()和另外一个信号aSignal() 进行了关联。这样一来，当信号clicked()被发射时，信号aSignal()也接着被发射。
+	当信号和槽没有必要继续保持关联时，我们能使用disconnect函数来断开连接。
+eg:
+bool QObject::disconnect ( const QObject * sender, const char * signal, const Object * receiver, const char * member ) [static] 
+这个函数断研发射者中的信号和接收者中的槽函数之间的关联。 
+
+有三种情况必须使用disconnect()函数： 
+	1/断开和某个对象相关联的所有对象。这似乎有点不可理解，事实上，当我们在某个对象中定义了一个或多个信号，这些信号和另外若干个对象中的槽相关联，如果我们要切断这些关联的话，就能利用这个方法，非常之简洁。 
+myObject->disconnect()或
+disconnect( myObject, 0, 0, 0 ) 
+	2/断开和某个特定信号的所有关联。
+myObject->disconnect( SIGNAL(mySignal()) ) 或
+disconnect( myObject, SIGNAL(mySignal()), 0, 0 ) 
+	3/断开两个对象之间的关联。 
+myObject->disconnect( myReceiver ) 或
+disconnect( myObject, 0, myReceiver, 0 ) 
+在disconnect函数中0能用作一个通配符，分别表示所有信号、所有接收对象、接收对象中的所有槽函数。
+不过发射者sender不能为0，其他三个参数的值能等于0。 
+
+

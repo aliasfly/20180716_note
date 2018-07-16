@@ -1,0 +1,37 @@
+PX4 code building
+
+STEP 1 ：#Install  GCC 7 , For latest PX4 build 
+
+https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/7-2017q4/gcc-arm-none-eabi-7-2017-q4-major-linux.tar.bz2
+
+
+sudo gedit /etc/profile
+export PATH=/usr/bin/gcc-arm-none-eabi-XXXXX/bin:$PATH
+
+#For 64bit Ubuntu ,Run "arm-none-eabi-gcc --version "  You will get: arm-none-eabi-gcc: No such file or directory.Just install 32bit pkg
+just try：
+sudo apt-get install lib32z1 lib32ncurses5 libbz2-1.0:i386 lib32stdc++6
+
+# verify your arm-none-eabi-gcc version:
+arm-none-eabi-gcc --version
+
+You will get： 
+arm-none-eabi-gcc (GNU Tools for ARM Embedded Processors) XXXX (release) [ARM/embedded-5-branch revision XXXXXX]
+Copyright (C) 20XX Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+
+STEP 2: install tools
+ 
+#Following is form :http://blog.csdn.net/l1250464471/article/details/73042758
+
+sudo usermod -a -G dialout $USER
+sudo apt-get install python-argparse
+sudo apt-get install wget zip cmake build-essential genromfs -y
+sudo apt-get remove modemmanager
+sudo apt-get install python-serial
+sudo apt-get install python-jinja2 
+sudo apt-get install ninja-build
+sudo apt-get install python-empy
+sudo pip install catkin_pkg

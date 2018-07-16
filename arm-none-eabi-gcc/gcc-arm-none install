@@ -1,0 +1,11 @@
+#tar -jcvf archive_name.tar.bz2 xxxx
+#tar -jxvf archive_name.tar.bz2
+
+#sudo mv gcc-arm-none-eabi-5_4-2016q3 /usr
+
+#sudo gedit /etc/environment
+				/usr/gcc-arm-none-eabi-5_4-2016q3/bin:
+
+
+
+

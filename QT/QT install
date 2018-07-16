@@ -1,0 +1,46 @@
+remove 
+在终端里面进入我们安装QtCreator里面;
+./MaintenanceTool 执行它
+
+
+
+
+https://blog.csdn.net/hhrock/article/details/61621044
+
+QT  counter:zhangzexiangks@126.com
+QT password:YC#zzx9099
+
+
+QT Account home page:https://account.qt.io/
+
+
+chmod +x qt-opensource-linux-x64-5.8.0.run
+
+sudo ./qt-opensource-linux-x64-5.8.0.run
+
+安装完成后一般还要修改一些配置。
+
+在命令行中输入：sudo gedit /usr/lib/x86_64-linux-gnu/qt-default/qtchooser/default.conf
+
+打开default.conf文件，
+
+将第一行改为bin目录的路径，第二行改为qt5.8.0目录的路径。
+/opt/Qt5.8.0/5.8.0/gcc_64/bin
+/opt/Qt5.8.0
+保存退出。
+
+
+然后在命令行中输入：sudo apt-get install libgl1-mesa-dev
+
+安装 libgl1-mesa-dev。
+
+
+
+安装完成之后就可以打开软件编程了
+
+ubuntu下查看qt版本的方法:
+run:qmake -v
+
+
+
+

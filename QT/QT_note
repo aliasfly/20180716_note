@@ -1,0 +1,60 @@
+read / write file
+https://blog.csdn.net/zhuyunfei/article/details/51249378
+
+注意{}后面不能有;;;;;否则 编译不能通过
+console.log(i);//显示变量//此时qml:作为前缀
+Qt.quit()   //直接退出Qt仿真界面
+F4 在头文件和代码之间切换
+F2 在声明和实现之间切换
+选中几行代码点Tab 几行代码同时缩进。
+Ctrl + / 注释或取消注释
+输入的时候不区分大小写,所以完全,可以直接使用小写
+true/false
+implicitWidth绝对xx//implicitHeight绝对xx
+FileDialog文件对话框
+nameFilters名字过滤
+verticalCenter垂直中心
+
+Component.onCompleted:完整成分/////while(1)
+property特性，属性
+function//关键词函数
+
+constructor//构造器
+
+asynchronous异步的
+PreserveAspectFit等比缩放
+hovered悬停
+border :边界
+opacity:0.0-1.0不透明性
+rotation:旋转
+anchors:锚
+margin:边缘
+gradient:变化率
+color:"red";"blue";"yellow";"green";
+border:边界
+radius:半径
+antialiasing:消除混叠现象
+bold:粗体字
+pixelSize:像素-字体大小
+qsTr:Quick Short Test Report
+event.accepted=true;//处理按键,must let it true
+wordwrap:自动换行
+bottom:底部
+Button按钮//ButtonStyle按钮样式
+clicked:咔嗒一按
+
+
+
+Rectangle类{
+矩形类{};
+}
+
+
+Text类{
+文本类{};
+            style: Text.Outline;//must have;
+            styleColor: "red";
+}
+
+
+
