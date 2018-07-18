@@ -3,6 +3,11 @@ run:unzip xxxx.zip  /xx/xx/location
 ubuntu下解压.tar.bz2文件
 run:tar -jxvf xxx.tar.bz2
 
+rar a xxxx.rar xxx
+rar x xxxx.rar
+rar t xxxx.rar
+
+
 ubuntu复制文件夹||移动文件夹||文件删除命令rm
 run:cp source1 source2 source3 ... directory
 run:mv source destination
